@@ -21,9 +21,8 @@ export class CategoriesService {
   loadData(){
     return this.afs.collection('categories').snapshotChanges().pipe(
       map(actions => {
-       return actions.map((a: { payload: { doc: {
-          [x: string]: any; data: () => any; 
-}; }; }) => {
+       return actions.map(a => {
+
           const data = a.payload.doc.data();
           const id = a.payload.doc['id'];
           return { id, data }
