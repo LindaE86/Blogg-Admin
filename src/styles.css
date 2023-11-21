@@ -3,9 +3,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@800&family=Roboto&display=swap');
 @import "~ngx-toastr/toastr";
 :root {
-    --primary-color: #026467;
-    --secondary-color: #E5F5EA;
-    --body-text-color: #596392;
+    --primary-color: #0b4f52;
+    --secondary-color: rgb(138, 210, 192);
+    --body-text-color: #2f323f;
     --navbar-footer-color: #f9f9f9;
 }
 
