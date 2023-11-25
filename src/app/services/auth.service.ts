@@ -12,10 +12,10 @@ export class AuthService {
   loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   isLoggedInGuard: boolean = false;
 
-  constructor( private afAuth: AngularFireAuth, private toastr: ToastrService, private router: Router ) { }
+  constructor(private afAuth: AngularFireAuth, private toastr: ToastrService, private router: Router) { }
 
-  login( email: string, password: string) {
-  this.afAuth.signInWithEmailAndPassword(email, password).then(logRef =>{
+  login(email: string, password: string) {
+    this.afAuth.signInWithEmailAndPassword(email, password).then(logRef => {
       this.toastr.success('Logged In Succesfully');
       this.loadUser();
       this.loggedIn.next(true);
@@ -27,15 +27,15 @@ export class AuthService {
 
   }
 
-  loadUser(){
-    this.afAuth.authState.subscribe( user => {
+  loadUser() {
+    this.afAuth.authState.subscribe(user => {
 
       localStorage.setItem('user', JSON.stringify(user));
 
     });
   }
 
-  logOut(){
+  logOut() {
     this.afAuth.signOut().then(() => {
       this.toastr.success('User logged Out Successfully');
       localStorage.removeItem('user');
@@ -45,10 +45,10 @@ export class AuthService {
     });
   }
 
-    isLoggedIn() {
-      return this.loggedIn.asObservable();
-      
-    }
+  isLoggedIn() {
+    return this.loggedIn.asObservable();
+
+  }
 
 }
 

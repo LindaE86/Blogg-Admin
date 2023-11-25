@@ -7,6 +7,6 @@ export const environment = {
         storageBucket: "angular-blogg.appspot.com",
         messagingSenderId: "249344347890",
         appId: "1:249344347890:web:c69c497b91eba589cd0a6b"
-      
+
     }
 };

@@ -6,22 +6,17 @@
 
             <form class="form-inline text-center" #categoryForm='ngForm' (ngSubmit)="onSubmit(categoryForm)">
                 <div class="col-md-10">
-                    <input 
-                    type="text" 
-                    name="category" 
-                    class="form-control shadow-effect"
-                    placeholder="Add New Categories" 
-                    #newCategory='ngModel' 
-                    [(ngModel)] = 'formCategory'
-                    required
-                    [ngClass]="{ 'is-invalid': newCategory.touched && newCategory.invalid }">
+                    <input type="text" name="category" class="form-control shadow-effect"
+                        placeholder="Add New Categories" #newCategory='ngModel' [(ngModel)]='formCategory' required
+                        [ngClass]="{ 'is-invalid': newCategory.touched && newCategory.invalid }">
                     <div class="alert alert-dager" *ngIf=" newCategory.touched && newCategory.invalid ">
                         Category field is required
                     </div>
                 </div>
 
                 <div class="col-md-2">
-                    <button class="btn btn-block btn-info mb-2 btn-theme" [disabled]="categoryForm.invalid"> {{ formStatus }} Category </button>
+                    <button class="btn btn-block btn-info mb-2 btn-theme" [disabled]="categoryForm.invalid"> {{
+                        formStatus }} Category </button>
                 </div>
             </form>
         </div>
@@ -42,12 +37,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor = 'let category of categoryArray; let i = index'>
+                            <tr *ngFor='let category of categoryArray; let i = index'>
                                 <td> {{ i+1 }}</td>
-                                <td> {{ category.data.category  }}</td>
-                                <td> 
-                                    <button class="btn btn-sm btn-warning" (click)="onEdit(category.data.category, category.id)"> Edit </button>
-                                    <button class="btn btn-sm btn-danger ml-2 " (click)="onDelate(category.id)"> Delate </button>
+                                <td> {{ category.data.category }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-warning"
+                                        (click)="onEdit(category.data.category, category.id)"> Edit </button>
+                                    <button class="btn btn-sm btn-danger ml-2 " (click)="onDelate(category.id)"> Delate
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>

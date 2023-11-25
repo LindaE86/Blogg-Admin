@@ -1,5 +1,5 @@
 export interface Post {
-    
+
     title: string,
     permalink: string,
     category: {

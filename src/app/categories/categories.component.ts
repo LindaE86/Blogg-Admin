@@ -8,36 +8,36 @@ import { Category } from '../models/category';
 })
 
 export class CategoriesComponent implements OnInit {
-[x: string]: any;
+  [x: string]: any;
 
   categoryArray: Array<object> | any;
   formCategory!: string;
-  formStatus: string ='Add';
+  formStatus: string = 'Add';
   categoryId!: string;
 
-  constructor( private categoryService: CategoriesService ) {}
+  constructor(private categoryService: CategoriesService) { }
 
   ngOnInit(): void {
 
-    this.categoryService.loadData().subscribe( val =>  {
+    this.categoryService.loadData().subscribe(val => {
       console.log(val);
       this.categoryArray = val;
     })
   }
 
   onSubmit(formData: {
-    reset(): unknown; value: { category: any; }; 
-}){
+    reset(): unknown; value: { category: any; };
+  }) {
 
-    let categoryData: Category ={
+    let categoryData: Category = {
       category: formData.value.category
     }
 
-    if( this.formStatus == 'Add' ){
+    if (this.formStatus == 'Add') {
       this.categoryService.saveData(categoryData);
       formData.reset();
     }
-    else if( this.formStatus == 'Edit'){
+    else if (this.formStatus == 'Edit') {
       this.categoryService.updateData(this.categoryId, categoryData);
       formData.reset();
       this.formStatus = 'Add';
@@ -45,18 +45,18 @@ export class CategoriesComponent implements OnInit {
 
 
 
-//    this.afs.collection('categories').add(categoryData).then((docRef: any) => {
-//      console.log(docRef);
-//  })
-//  .catch((err: any) => { console.log(err) })
+    //    this.afs.collection('categories').add(categoryData).then((docRef: any) => {
+    //      console.log(docRef);
+    //  })
+    //  .catch((err: any) => { console.log(err) })
   }
-  onEdit(category: any, id: string){
+  onEdit(category: any, id: string) {
     this.formCategory = category;
     this.formStatus = 'Edit';
     this.categoryId = id;
   }
 
-  onDelate(id: string | undefined){
+  onDelate(id: string | undefined) {
     this.categoryService.delateData(id);
   }
 }

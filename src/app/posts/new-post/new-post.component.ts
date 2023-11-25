@@ -11,11 +11,11 @@ import { PostsService } from 'src/app/services/posts.service';
   styleUrls: ['./new-post.component.css']
 })
 export class NewPostComponent implements OnInit {
-[x: string]: any;
+  [x: string]: any;
 
-  permalink: string = '' ;
+  permalink: string = '';
   imgSrc: any = "./assets/placeholder-image.png";
-  selectedImg: any ;
+  selectedImg: any;
 
   categories: any;
 
@@ -26,23 +26,23 @@ export class NewPostComponent implements OnInit {
   formStatus: string = 'Add New';
 
   docId!: string;
-  
-  constructor( 
-    private categoryService: CategoriesService, 
-    private fb: FormBuilder, 
-    private postService: PostsService, 
+
+  constructor(
+    private categoryService: CategoriesService,
+    private fb: FormBuilder,
+    private postService: PostsService,
     private route: ActivatedRoute,
-   ) {
+  ) {
 
     this.route.queryParams.subscribe(val => {
-      
+
       this.docId = val['id'];
 
-      if(this.docId){
+      if (this.docId) {
         this.postService.loadOneData(val['id']).subscribe(post => {
 
           this.post = post;
-  
+
           this.postForm = this.fb.group({
             title: [this.post.title, [Validators.required, Validators.minLength(10)]],
             permalink: [this.post.permalink, Validators.required],
@@ -51,11 +51,11 @@ export class NewPostComponent implements OnInit {
             postImg: ['', Validators.required],
             content: [this.post.content, Validators.required]
           })
-  
+
           this.imgSrc = this.post.postImgPath;
           this.formStatus = 'Edit';
-  
-  
+
+
         })
       } else {
         this.postForm = this.fb.group({
@@ -68,33 +68,33 @@ export class NewPostComponent implements OnInit {
         })
       }
 
-     
+
     })
 
-      
 
 
 
-   }
+
+  }
 
   ngOnInit(): void {
     this.categoryService.loadData().subscribe(val => {
       this.categories = val;
     })
-    
-}
 
-get fc (){
-  return this.postForm.controls
-}
+  }
 
-  onTitleChanged($event: any ) {
+  get fc() {
+    return this.postForm.controls
+  }
+
+  onTitleChanged($event: any) {
 
     const title = $event.target.value;
     this.permalink = title.replace(/\s/g, '-');
   }
 
-  showPreview ($event: any ) {
+  showPreview($event: any) {
     const reader = new FileReader();
     reader.onload = (e: any) => {
       this.imgSrc = e.target.result
@@ -103,8 +103,8 @@ get fc (){
     reader.readAsDataURL($event?.target.files[0]);
     this.selectedImg = $event.target.files[0];
   }
-  onSubmit(){
-    
+  onSubmit() {
+
     let splitted = this.postForm.value.category.split('-');
 
     const postData: Post = {
@@ -122,8 +122,8 @@ get fc (){
       status: 'new',
       createdAt: new Date()
     }
-  
-    this.postService.uploadImage(this.selectedImg,postData, this.formStatus, this.docId );
+
+    this.postService.uploadImage(this.selectedImg, postData, this.formStatus, this.docId);
     this.postForm.reset();
     this.imgSrc = "./assets/placeholder-image.png";
   }

@@ -12,16 +12,16 @@ export class HeaderComponent implements OnInit {
   userEmail: string | any;
   isLoggedIn$!: Observable<boolean>
 
-  constructor( private authService: AuthService ) {  }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
 
-   this.userEmail = JSON.parse(localStorage.getItem('user') || '{]').email;
-    
-   this.isLoggedIn$ = this.authService.isLoggedIn();
+    this.userEmail = JSON.parse(localStorage.getItem('user') || '{]').email;
+
+    this.isLoggedIn$ = this.authService.isLoggedIn();
   }
 
-  onLogOut(){
+  onLogOut() {
     this.authService.logOut();
 
 

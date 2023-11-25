@@ -11,34 +11,34 @@ import { Data, Router } from '@angular/router';
 })
 export class PostsService {
 
-  constructor( 
-    private storage: AngularFireStorage, 
-    private afs: AngularFirestore, 
+  constructor(
+    private storage: AngularFireStorage,
+    private afs: AngularFirestore,
     private toastr: ToastrService,
     private router: Router
-    ) { }
-  
-  uploadImage(selectedImage: Data, postData: Post, formStatus: any, id: any){
-  const filePath = `postIMG/${Date.now()}`;
+  ) { }
+
+  uploadImage(selectedImage: Data, postData: Post, formStatus: any, id: any) {
+    const filePath = `postIMG/${Date.now()}`;
     console.log(filePath);
-    
+
     this.storage.upload(filePath, selectedImage).then(() => {
       console.log('post image uploaded successfully');
 
-    this.storage.ref(filePath).getDownloadURL().subscribe(URL=> {
-      postData.postImgPath = URL;
-      console.log(postData);
+      this.storage.ref(filePath).getDownloadURL().subscribe(URL => {
+        postData.postImgPath = URL;
+        console.log(postData);
 
-      if(formStatus == 'Edit'){
-        this.updateData(id, postData);
-      } else {
-        this.saveData(postData);
-      }
-
-    
+        if (formStatus == 'Edit') {
+          this.updateData(id, postData);
+        } else {
+          this.saveData(postData);
+        }
 
 
-       })
+
+
+      })
     })
   }
   saveData(postData: any) {
@@ -48,10 +48,10 @@ export class PostsService {
     });
   }
 
-  loadData(){
+  loadData() {
     return this.afs.collection('posts').snapshotChanges().pipe(
       map(actions => {
-       return actions.map(a => {
+        return actions.map(a => {
 
           const data = a.payload.doc.data();
           const id = a.payload.doc['id'];
@@ -64,30 +64,30 @@ export class PostsService {
     return this.afs.doc(`posts/${id}`).valueChanges();
   }
 
-  updateData(id: any, postData: any){
+  updateData(id: any, postData: any) {
 
-    this.afs.doc(`posts/${id}`).update(postData).then(()=> {
+    this.afs.doc(`posts/${id}`).update(postData).then(() => {
       this.toastr.success('Data Updated Successfully');
       this.router.navigate(['/posts']);
     })
   }
 
-  deleteImage(postImgPath: any, id: any){
-    this.storage.storage.refFromURL(postImgPath).delete().then(() =>{
+  deleteImage(postImgPath: any, id: any) {
+    this.storage.storage.refFromURL(postImgPath).delete().then(() => {
       this.deleteData(id);
     })
   }
 
-    deleteData(id: any){
-      this.afs.doc(`posts/${id}`).delete().then(()=>{
-        this.toastr.warning('Data Deleted!');
-      })
-    }
+  deleteData(id: any) {
+    this.afs.doc(`posts/${id}`).delete().then(() => {
+      this.toastr.warning('Data Deleted!');
+    })
+  }
 
-    markFeatured(id: any, featuredData: any){
-      
-      this.afs.doc(`posts/${id}`).update(featuredData).then (()=>{
-            this.toastr.info('Featured Status Updated');
-      })
-    }
+  markFeatured(id: any, featuredData: any) {
+
+    this.afs.doc(`posts/${id}`).update(featuredData).then(() => {
+      this.toastr.info('Featured Status Updated');
+    })
+  }
 }
